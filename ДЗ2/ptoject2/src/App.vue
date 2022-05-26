@@ -1,52 +1,59 @@
 <template>
-  <div id="app">
-    <h1>Калькулятор</h1>
-    <input type="number" v-model.number="op1">
-    <input type="number" v-model.number="op2">
+<div id="app">
+  <img alt="Vue logo" src="./assets/logo.png">
+  <h1>Калькулятор</h1>
+  <input type="number" id="op1" v-model.number="op1" >
+  <input type="number" id="op2" v-model.number="op2" >
   = {{result}}
   <template v-if="remain">(Остаток = {{remain}})</template>
-  <div class="keyboard">
-<button v-for="(operand,index) in operands" 
-v-bind:key="index" 
-v-bind:title="operand"
-@click="calculate(operand)">
-{{ operand }}
-</button>
+  <div class="keyboard"> 
+    <button v-for="(operand,index) in operands" 
+    v-bind:key="index" 
+    v-bind:title="operand"
+    @click="calculate(operand)">
+    {{ operand }}
+    </button>
   </div>
   <div v-if="error">Ошибка! {{ error }}</div>
-  <div class="display">
-fib(<input v-model.number="op1" />)
-fib(<input v-model.number="op2" />)
-= {{ fibResult }}
-</div>
-  <div class="strange-message">
-<template v-if="result < 0">Получилось отрицательное число</template>
-<template v-else-if="result < 100">Результат в первой сотне</template>
-<template v-else>Получилось слишком большое число</template>
-</div>
-<div v-for="(item,index) in myCollection" v-bind:key="index">
-{{ index }} - {{ item }}
-</div>
-<div class="logs">
-  <div v-for="(log, id) in logs" v-bind:key="id">{{log}}</div>
-</div>
+  <div class="keyboard-layout"> 
+    <input type="checkbox" id="checkbox" v-model="checked">
+    <label for="checkbox">Отобразить экранную клавиатуру</label>
+    <div v-show="checked">
+      <button v-for="fig in myCollection" 
+      v-bind:key="fig"
+      @click="push(fig)">
+      {{fig}}
+      </button>
+      <button @click="reset">reset</button>
+      <br>
+      <input type="radio" id="one" name="radio" value="op1" v-model="currentOperand">
+      <label for="one">Операнд 1</label>
+      <input type="radio" id="two" name="radio" value="op2" v-model="currentOperand">
+      <label for="two">Операнд 2</label>
+    </div>
+  
   </div>
+
+</div>
 </template>
 
 <script>
 
 export default {
-  
-  name: "CalcComp",
-  data() {
+  name: 'App',
+    data() {
       return {
           op1: 0,
           op2: 0,
+          operand1: 0,
+          operand2: 0,
           result:0,
           remain:0,
           fibResult:0,
           operands: ['+', '-', '*', '/', '^', '/()'],
-          myCollection: [1,2,3,4,5,6,7],
+          myCollection: [0,1,2,3,4,5,6,7,8,9],
+          checked:false,
+          currentOperand: 'op1',
           logs: {},
           error: ''
       }
@@ -121,6 +128,12 @@ export default {
       this.result = parseInt(op1 / op2);
       }
     },
+    push(fig) {
+      this[this.currentOperand] = fig;
+    },
+    reset() {
+      this[this.currentOperand] = 0;
+    }
   },
   computed: {
     fibb1 () {
@@ -130,8 +143,7 @@ export default {
       return this.fib(this.op2)
       },
     }
-  }
-
+}
 </script>
 
 <style>
