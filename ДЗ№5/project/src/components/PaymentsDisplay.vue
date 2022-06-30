@@ -32,14 +32,23 @@ export default {
     props: {
     items: {
         type: Array,
+        default: () => ([]),
+
         }
     },
     computed: {
     getFPV () {
         return this.$store.getters.getFullPaymentValue
-    }
+    },
+    //    paymentsList() {
+    //   return this.$store.getters.paymentsList;
+    // },
 },
-
+update: {
+    getFPV () {
+        return this.$store.getters.getFullPaymentValue
+    },
+}
 }
 </script>
 

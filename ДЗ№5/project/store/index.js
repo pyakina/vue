@@ -61,6 +61,7 @@ export default new Vuex.Store ({
         },
         addNewPayment({ commit }, payload) {
             commit('ADD_PAYMENTS_DATA', payload);
+
             },
         loadCategories({ commit }) {
            setTimeout(() => {

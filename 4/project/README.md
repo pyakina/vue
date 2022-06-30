@@ -1,4 +1,4 @@
-# p3
+# project
 
 ## Project setup
 ```
